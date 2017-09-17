@@ -2,10 +2,8 @@ package com.nunez.compoundedittext
 
 import android.content.Context
 import android.util.AttributeSet
-import android.util.Log
 import android.view.LayoutInflater
 import android.widget.LinearLayout
-import android.widget.Toast
 import kotlinx.android.synthetic.main.custom_field.view.*
 
 
@@ -36,7 +34,6 @@ class CustomField @JvmOverloads constructor(
     fun setClearListener(){
         // Clear the text when the x is clicked
         customField_clear.setOnClickListener {
-            Toast.makeText(context, "clicked", Toast.LENGTH_SHORT)
             customField_editText.setText("")
         }
     }
