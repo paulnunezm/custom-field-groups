@@ -2,8 +2,10 @@ package com.nunez.compoundedittext
 
 import android.content.Context
 import android.util.AttributeSet
+import android.util.Log
 import android.view.LayoutInflater
 import android.widget.LinearLayout
+import android.widget.Toast
 import kotlinx.android.synthetic.main.custom_field.view.*
 
 
@@ -17,16 +19,8 @@ class CustomField @JvmOverloads constructor(
         val inflater = context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         inflater.inflate(R.layout.custom_field, this)
-    }
 
-    override fun onFinishInflate() {
-        super.onFinishInflate()
-
-        // Clear the text when the x is clicked
-        customField_clear.setOnClickListener {
-            customField_editText.setText("")
-        }
-
+        setClearListener()
     }
 
     fun textListener(listener: (Boolean) -> (Unit)) {
@@ -39,4 +33,11 @@ class CustomField @JvmOverloads constructor(
         customField_editText.hint = hint
     }
 
+    fun setClearListener(){
+        // Clear the text when the x is clicked
+        customField_clear.setOnClickListener {
+            Toast.makeText(context, "clicked", Toast.LENGTH_SHORT)
+            customField_editText.setText("")
+        }
+    }
 }
