@@ -11,7 +11,9 @@ class CustomField @JvmOverloads constructor(
         context: Context,
         attrs: AttributeSet? = null,
         defStyleAttr: Int = 0
-) : LinearLayout(context, attrs, defStyleAttr) {
+) : LinearLayout(context, attrs, defStyleAttr){
+
+    lateinit var textWatcher: CustomTextWatcher
 
     init {
         val inflater = context
@@ -21,10 +23,17 @@ class CustomField @JvmOverloads constructor(
         setClearListener()
     }
 
-    fun textListener(listener: (Boolean) -> (Unit)) {
-        customField_editText.addTextChangedListener(
-                CustomTextWatcher({ listener(it) })
-        )
+    fun setTextListener(listener: (hasText: Boolean, textStateChanged: Boolean) -> (Unit)) {
+        textWatcher = CustomTextWatcher({
+            hasText, textStateChanged ->
+            listener(hasText, textStateChanged)
+        })
+
+        customField_editText.addTextChangedListener(textWatcher)
+    }
+
+    fun removeTextListener(){
+        customField_editText.removeTextChangedListener(textWatcher)
     }
 
     fun setHint(hint: String) {
