@@ -14,8 +14,8 @@ class CustomFieldGroup @JvmOverloads constructor(
         defStyleAttr: Int = 0
 ) : ConstraintLayout(context, attrs, defStyleAttr) {
 
-    var fieldsArray = ArrayList<CustomField>()
-    lateinit var textWatcher: CustomTextWatcher
+    private var fieldsArray = ArrayList<CustomField>()
+    private lateinit var textWatcher: CustomTextWatcher
 
     init {
         val inflater = context
@@ -31,7 +31,7 @@ class CustomFieldGroup @JvmOverloads constructor(
         addNewField()
     }
 
-    fun showAddButton() {
+    private fun showAddButton() {
         addNewBtn.visibility = View.VISIBLE
         addNewBtn.alpha = 0f
         val animation = ObjectAnimator.ofFloat(addNewBtn, "alpha", 1f)
@@ -39,11 +39,11 @@ class CustomFieldGroup @JvmOverloads constructor(
         animation.start()
     }
 
-    fun hideAddButton() {
+    private fun hideAddButton() {
         addNewBtn.visibility = View.GONE
     }
 
-    fun addNewField() {
+    private fun addNewField() {
         hideAddButton()
 
         // Create a new field
@@ -62,7 +62,7 @@ class CustomFieldGroup @JvmOverloads constructor(
         if(fieldsArray.size > 1) field.requestFocus()
     }
 
-    fun initTexWatcherListener() {
+    private fun initTexWatcherListener() {
         textWatcher = CustomTextWatcher {
             hasText, textStateChanged ->
 
@@ -75,7 +75,7 @@ class CustomFieldGroup @JvmOverloads constructor(
         }
     }
 
-    fun setListenerToTheLastVisibleField() {
+    private fun setListenerToTheLastVisibleField() {
         if (fieldsArray.size == 1) {
             fieldsArray[0].setTextListener(textWatcher)
         } else {
