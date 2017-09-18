@@ -23,13 +23,9 @@ class CustomField @JvmOverloads constructor(
         setClearListener()
     }
 
-    fun setTextListener(listener: (hasText: Boolean, textStateChanged: Boolean) -> (Unit)) {
-        textWatcher = CustomTextWatcher({
-            hasText, textStateChanged ->
-            listener(hasText, textStateChanged)
-        })
-
-        customField_editText.addTextChangedListener(textWatcher)
+    fun setTextListener(textWatcher: CustomTextWatcher) {
+        this.textWatcher = textWatcher
+        customField_editText.addTextChangedListener(this.textWatcher)
     }
 
     fun removeTextListener(){
@@ -46,4 +42,6 @@ class CustomField @JvmOverloads constructor(
             customField_editText.setText("")
         }
     }
+
+    fun getFieldValue(): String = customField_editText.text.toString()
 }
