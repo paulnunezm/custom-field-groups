@@ -10,7 +10,6 @@ import android.view.View
 import kotlinx.android.synthetic.main.custom_field_group.view.*
 
 
-
 class CustomFieldGroup @JvmOverloads constructor(
         context: Context,
         attrs: AttributeSet? = null,
@@ -24,7 +23,7 @@ class CustomFieldGroup @JvmOverloads constructor(
 
     private var fieldsArray = ArrayList<CustomField>()
     private lateinit var textWatcher: CustomTextWatcher
-    private lateinit var imageDrawable: Drawable
+    private var imageDrawable: Drawable
     private var hint = ""
     private var inputType = 0
 
@@ -70,13 +69,14 @@ class CustomFieldGroup @JvmOverloads constructor(
 
         // Create a new field
         val field = CustomField(context)
-        if(hint.isNotEmpty()) field.setHint(hint)
+        if (hint.isNotEmpty()) field.setHint(hint)
 
         // Set input type
-        val input = when(inputType){
-            INPUT_PHONE_NUMBER -> CustomField.INPUT_PHONE_NUMBER
-            else -> CustomField.INPUT_TEXT
-        }
+        val input = if (inputType == INPUT_PHONE_NUMBER)
+            CustomField.INPUT_PHONE_NUMBER
+        else
+            CustomField.INPUT_TEXT
+
         field.setInputType(input)
 
         // Add it to the layout
@@ -88,7 +88,7 @@ class CustomFieldGroup @JvmOverloads constructor(
         setListenerToTheLastVisibleField()
 
         // Set focus to the new field if is not the first
-        if(fieldsArray.size > 1) field.requestFocus()
+        if (fieldsArray.size > 1) field.requestFocus()
     }
 
     private fun initTexWatcherListener() {
