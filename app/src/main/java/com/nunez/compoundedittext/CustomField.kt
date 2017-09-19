@@ -1,6 +1,7 @@
 package com.nunez.compoundedittext
 
 import android.content.Context
+import android.text.InputType
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.LinearLayout
@@ -12,6 +13,11 @@ class CustomField @JvmOverloads constructor(
         attrs: AttributeSet? = null,
         defStyleAttr: Int = 0
 ) : LinearLayout(context, attrs, defStyleAttr){
+
+    companion object {
+        const val INPUT_PHONE_NUMBER = 0
+        const val INPUT_TEXT = 1
+    }
 
     lateinit var textWatcher: CustomTextWatcher
 
@@ -40,6 +46,14 @@ class CustomField @JvmOverloads constructor(
         // Clear the text when the x is clicked
         customField_clear.setOnClickListener {
             customField_editText.setText("")
+        }
+    }
+
+    fun setInputType(type: Int){
+        customField_editText.inputType = when(type){
+            INPUT_PHONE_NUMBER -> InputType.TYPE_CLASS_PHONE
+            INPUT_TEXT -> InputType.TYPE_TEXT_FLAG_AUTO_COMPLETE
+            else -> InputType.TYPE_CLASS_TEXT
         }
     }
 

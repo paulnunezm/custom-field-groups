@@ -2,11 +2,14 @@ package com.nunez.compoundedittext
 
 import android.animation.ObjectAnimator
 import android.content.Context
+import android.graphics.drawable.Drawable
 import android.support.constraint.ConstraintLayout
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
 import kotlinx.android.synthetic.main.custom_field_group.view.*
+
+
 
 class CustomFieldGroup @JvmOverloads constructor(
         context: Context,
@@ -14,8 +17,17 @@ class CustomFieldGroup @JvmOverloads constructor(
         defStyleAttr: Int = 0
 ) : ConstraintLayout(context, attrs, defStyleAttr) {
 
+    companion object {
+        const val INPUT_TEXT = 1
+        const val INPUT_PHONE_NUMBER = 2
+    }
+
     private var fieldsArray = ArrayList<CustomField>()
     private lateinit var textWatcher: CustomTextWatcher
+    private lateinit var imageDrawable: Drawable
+    private var hint = ""
+    private var inputType = 0
+
 
     init {
         val inflater = context
@@ -25,6 +37,16 @@ class CustomFieldGroup @JvmOverloads constructor(
         addNewBtn.visibility = View.GONE
 
         addNewBtn.setOnClickListener { addNewField() }
+
+        // Check for the added parameters
+        val typedArray = context.obtainStyledAttributes(attrs, R.styleable.CustomFieldGroup)
+        hint = typedArray.getString(R.styleable.CustomFieldGroup_input_hint)
+        imageDrawable = typedArray.getDrawable(R.styleable.CustomFieldGroup_reference_image)
+        inputType = typedArray.getInt(R.styleable.CustomFieldGroup_input_type, 0)
+        typedArray.recycle()
+
+        // Add the reference image
+        image.setImageDrawable(imageDrawable)
 
         // Add the first field
         initTexWatcherListener()
@@ -48,7 +70,14 @@ class CustomFieldGroup @JvmOverloads constructor(
 
         // Create a new field
         val field = CustomField(context)
-        field.setHint("addresses")
+        if(hint.isNotEmpty()) field.setHint(hint)
+
+        // Set input type
+        val input = when(inputType){
+            INPUT_PHONE_NUMBER -> CustomField.INPUT_PHONE_NUMBER
+            else -> CustomField.INPUT_TEXT
+        }
+        field.setInputType(input)
 
         // Add it to the layout
         fields.addView(field)

@@ -1,23 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:customFieldGroup="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context="com.nunez.compoundedittext.MainActivity">
 
-    <com.nunez.compoundedittext.CustomFieldGroup
-        android:id="@+id/addressField"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <com.nunez.compoundedittext.CustomFieldGroup
+            android:id="@+id/addressField"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            customFieldGroup:input_hint="Phone number"
+            customFieldGroup:input_type="phonenumber"
+            customFieldGroup:reference_image="@drawable/ic_phone_black"/>
+
+        <com.nunez.compoundedittext.CustomFieldGroup
+            android:id="@+id/phoneField"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            customFieldGroup:input_hint="Address"
+            customFieldGroup:input_type="text"
+            customFieldGroup:reference_image="@drawable/ic_add_location"/>
+
+    </LinearLayout>
 
     <Button
         android:id="@+id/showAllInputValues"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Log all values"
+        android:layout_gravity="bottom|end"
         android:layout_margin="12dp"
-        android:layout_gravity="bottom|end"/>
+        android:text="Log all values"/>
 
 </FrameLayout>

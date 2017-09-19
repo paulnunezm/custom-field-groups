@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="CustomFieldGroup">
+        <attr name="reference_image" format="fraction"/>
+        <attr name="input_hint" format="string"/>
+        <attr name="input_type">
+            <enum name="text" value="1" />
+            <enum name="phonenumber" value="2" />
+        </attr>
+    </declare-styleable>
+</resources>
