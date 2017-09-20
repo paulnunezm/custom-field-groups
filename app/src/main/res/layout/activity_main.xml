@@ -14,19 +14,21 @@
         android:orientation="vertical">
 
         <com.nunez.compoundedittext.CustomFieldGroup
-            android:id="@+id/addressField"
+            android:id="@+id/phoneField"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             customFieldGroup:input_hint="Phone number"
             customFieldGroup:input_type="phonenumber"
+            customFieldGroup:input_error_message="No puede permancer vacío"
+            customFieldGroup:input_has_at_least_one="true"
             customFieldGroup:reference_image="@drawable/ic_phone_black"/>
 
         <com.nunez.compoundedittext.CustomFieldGroup
-            android:id="@+id/phoneField"
+            android:id="@+id/addressField"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             customFieldGroup:input_hint="Address"
-            customFieldGroup:input_type="text"
+            customFieldGroup:input_type="text" 
             customFieldGroup:reference_image="@drawable/ic_add_location"/>
 
     </LinearLayout>
