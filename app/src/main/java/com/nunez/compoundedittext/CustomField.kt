@@ -20,6 +20,7 @@ class CustomField @JvmOverloads constructor(
     }
 
     lateinit var textWatcher: CustomTextWatcher
+    var clearHandlerSet = false
 
     init {
         val inflater = context
@@ -45,8 +46,12 @@ class CustomField @JvmOverloads constructor(
     fun setClearListener(){
         // Clear the text when the x is clicked
         customField_clear.setOnClickListener {
-            customField_editText.setText("")
+            if(!clearHandlerSet) clearText()
         }
+    }
+
+    fun clearText(){
+        customField_editText.setText("")
     }
 
     fun setInputType(type: Int){
@@ -54,6 +59,13 @@ class CustomField @JvmOverloads constructor(
             INPUT_PHONE_NUMBER -> InputType.TYPE_CLASS_PHONE
             INPUT_TEXT -> InputType.TYPE_TEXT_FLAG_AUTO_COMPLETE
             else -> InputType.TYPE_CLASS_TEXT
+        }
+    }
+
+    fun setClearButtonHandler(listener: (CustomField) -> (Unit)){
+        clearHandlerSet = true
+        customField_clear.setOnClickListener {
+            listener(this)
         }
     }
 
