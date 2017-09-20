@@ -7,5 +7,9 @@
             <enum name="text" value="1" />
             <enum name="phonenumber" value="2" />
         </attr>
+        <attr name="input_has_at_least_one">
+            <enum name="false" value="0"/>
+            <enum name="true" value="1"/>
+        </attr>
     </declare-styleable>
 </resources>
