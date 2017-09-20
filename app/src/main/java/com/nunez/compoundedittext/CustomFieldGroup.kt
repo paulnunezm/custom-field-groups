@@ -79,6 +79,9 @@ class CustomFieldGroup @JvmOverloads constructor(
 
         field.setInputType(input)
 
+        // Set the clear handler
+        field.setClearButtonHandler { clearButtonHandler(it) }
+
         // Add it to the layout
         fields.addView(field)
 
@@ -102,6 +105,21 @@ class CustomFieldGroup @JvmOverloads constructor(
                     hideAddButton()
             }
         }
+    }
+
+    private fun clearButtonHandler(field: CustomField) {
+        if(fieldsArray.size > 1){
+            fields.removeView(field)
+            fieldsArray.remove(field)
+        }
+        else{
+            field.clearText()
+            // Assure that the add button isn't showing when only having one empty field
+            if(fieldsArray.size == 1)
+                hideAddButton()
+        }
+
+        setListenerToTheLastVisibleField()
     }
 
     private fun setListenerToTheLastVisibleField() {
