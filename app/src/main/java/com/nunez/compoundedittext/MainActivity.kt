@@ -12,8 +12,9 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         showAllInputValues.setOnClickListener {
-            val list = addressField.getFieldValues()
-            Log.d("Main", "$list")
+
+            Log.d("MainActivity", "${phoneField.getFieldValues()}")
         }
+
     }
 }

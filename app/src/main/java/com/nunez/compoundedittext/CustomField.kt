@@ -70,4 +70,8 @@ class CustomField @JvmOverloads constructor(
     }
 
     fun getFieldValue(): String = customField_editText.text.toString()
+
+    fun setError(errorMessage: String) {
+        customField_editText.error = errorMessage
+    }
 }
