@@ -25,7 +25,9 @@ class CustomFieldGroup @JvmOverloads constructor(
     private lateinit var textWatcher: CustomTextWatcher
     private var imageDrawable: Drawable
     private var hint = ""
+    private var errorMessage = ""
     private var inputType = 0
+    private var mustHaveAtLeastOneFilled = false
 
 
     init {
@@ -42,6 +44,10 @@ class CustomFieldGroup @JvmOverloads constructor(
         hint = typedArray.getString(R.styleable.CustomFieldGroup_input_hint)
         imageDrawable = typedArray.getDrawable(R.styleable.CustomFieldGroup_reference_image)
         inputType = typedArray.getInt(R.styleable.CustomFieldGroup_input_type, 0)
+
+        val error = typedArray.getString(R.styleable.CustomFieldGroup_input_error_message)
+        errorMessage = error ?: ""
+        mustHaveAtLeastOneFilled = typedArray.getBoolean(R.styleable.CustomFieldGroup_input_has_at_least_one, false)
         typedArray.recycle()
 
         // Add the reference image
@@ -108,14 +114,13 @@ class CustomFieldGroup @JvmOverloads constructor(
     }
 
     private fun clearButtonHandler(field: CustomField) {
-        if(fieldsArray.size > 1){
+        if (fieldsArray.size > 1) {
             fields.removeView(field)
             fieldsArray.remove(field)
-        }
-        else{
+        } else {
             field.clearText()
             // Assure that the add button isn't showing when only having one empty field
-            if(fieldsArray.size == 1)
+            if (fieldsArray.size == 1)
                 hideAddButton()
         }
 
@@ -134,7 +139,17 @@ class CustomFieldGroup @JvmOverloads constructor(
 
     fun getFieldValues(): ArrayList<String> {
         val values = ArrayList<String>()
-        fieldsArray.mapTo(values) { it.getFieldValue() }
+
+        if (values.size == 0 && fieldsArray[0].getFieldValue().isEmpty()) {
+            fieldsArray[0].setError(errorMessage)
+        } else {
+            fieldsArray.filter {
+                it.getFieldValue().isNotEmpty()
+            }.mapTo(values) {
+                it.getFieldValue()
+            }
+        }
+
         return values
     }
 }
