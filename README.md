@@ -3,7 +3,7 @@
 This project simulates the behavior of input fields showcased in
 the Android Contacts Application.
 
-![Gif] (view.gif?raw=true)
+![Gif] (https://github.com/paulnunezm/custom-field-groups/blob/master/view.gif?raw=true)
 
 ### Scope
 In this project you can see the following topics:
